@@ -110,21 +110,10 @@ EShMessages GetMessageRules(shaderc_util::Compiler::TargetEnv env,
 namespace shaderc_util {
 
 unsigned int GlslangInitializer::initialize_count_ = 0;
-std::mutex* GlslangInitializer::glslang_mutex_ = nullptr;
+static std::mutex glslang_mutex_;
 
 GlslangInitializer::GlslangInitializer() {
-  static std::mutex first_call_mutex;
-
-  // If this is the first call, glslang_mutex_ needs to be created, but in
-  // thread safe manner.
-  {
-    const std::lock_guard<std::mutex> first_call_lock(first_call_mutex);
-    if (glslang_mutex_ == nullptr) {
-      glslang_mutex_ = new std::mutex();
-    }
-  }
-
-  const std::lock_guard<std::mutex> glslang_lock(*glslang_mutex_);
+  const std::lock_guard<std::mutex> glslang_lock(glslang_mutex_);
 
   if (initialize_count_ == 0) {
     glslang::InitializeProcess();
@@ -134,18 +123,12 @@ GlslangInitializer::GlslangInitializer() {
 }
 
 GlslangInitializer::~GlslangInitializer() {
-  const std::lock_guard<std::mutex> glslang_lock(*glslang_mutex_);
+  const std::lock_guard<std::mutex> glslang_lock(glslang_mutex_);
 
   initialize_count_--;
 
   if (initialize_count_ == 0) {
     glslang::FinalizeProcess();
-    // There is no delete for glslang_mutex_ here, because we cannot guarantee
-    // there isn't a caller waiting for glslang_mutex_ in GlslangInitializer().
-    //
-    // This means that this class does leak one std::mutex worth of memory after
-    // the final instance is destroyed, but this allows us to defer allocating
-    // and constructing until we are sure we need to.
   }
 }
 
