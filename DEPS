@@ -4,6 +4,7 @@ vars = {
   'abseil_git':  'https://github.com/abseil',
   'google_git':  'https://github.com/google',
   'khronos_git': 'https://github.com/KhronosGroup',
+  'flonednb_git': 'https://github.com/Flone-dnb',
 
   'abseil_revision': '79ca5d7aad63973c83a4962a66ab07cd623131ea',
   'effcee_revision' : '66edefd2bb641de8a2f46b476de21f227fc03a28',
@@ -11,7 +12,7 @@ vars = {
   'googletest_revision': 'd9c309fdab807b716c2cf4d4a42989b8c34f712a',
   're2_revision': 'c9cba76063cf4235c1a15dd14a24a4ef8d623761',
   'spirv_headers_revision': 'bdbfd019be6952fd8fa9bd5606a8798a7530c853',
-  'spirv_tools_revision': 'e7c6084fd1d6d6f5ac393e842728d8be309688ca',
+  'spirv_tools_revision': '466323fadc90e6ae7a8187a3643ade06779db4be',
 }
 
 deps = {
@@ -33,6 +34,6 @@ deps = {
   'third_party/spirv-headers': Var('khronos_git') + '/SPIRV-Headers.git@' +
       Var('spirv_headers_revision'),
 
-  'third_party/spirv-tools': Var('khronos_git') + '/SPIRV-Tools.git@' +
+  'third_party/spirv-tools': Var('flonednb_git') + '/SPIRV-Tools.git@' +
       Var('spirv_tools_revision'),
 }
