@@ -139,11 +139,11 @@ if(${SHADERC_ENABLE_EXAMPLES})
     add_subdirectory(examples)
 endif()
 
-add_custom_target(build-version
-  ${PYTHON_EXECUTABLE}
-  ${CMAKE_CURRENT_SOURCE_DIR}/utils/update_build_version.py
-  ${shaderc_SOURCE_DIR} ${spirv-tools_SOURCE_DIR} ${glslang_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}/build-version.inc
-  COMMENT "Update build-version.inc in the Shaderc build directory (if necessary).")
+#add_custom_target(build-version
+#  ${PYTHON_EXECUTABLE}
+#  ${CMAKE_CURRENT_SOURCE_DIR}/utils/update_build_version.py
+#  ${shaderc_SOURCE_DIR} ${spirv-tools_SOURCE_DIR} ${glslang_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}/build-version.inc
+#  COMMENT "Update build-version.inc in the Shaderc build directory (if necessary).")
 
 function(define_pkg_config_file NAME LIBS)
   add_custom_target(${NAME}-pkg-config ALL
@@ -167,6 +167,6 @@ function(define_pkg_config_file NAME LIBS)
   endif()
 endfunction()
 
-define_pkg_config_file(shaderc -lshaderc_shared)
-define_pkg_config_file(shaderc_static "-lshaderc ${EXTRA_STATIC_PKGCONFIG_LIBS} -lshaderc_util")
-define_pkg_config_file(shaderc_combined -lshaderc_combined)
+#define_pkg_config_file(shaderc -lshaderc_shared)
+#define_pkg_config_file(shaderc_static "-lshaderc ${EXTRA_STATIC_PKGCONFIG_LIBS} -lshaderc_util")
+#define_pkg_config_file(shaderc_combined -lshaderc_combined)
